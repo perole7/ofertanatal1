@@ -95,6 +95,13 @@ footer{background:#071f14;color:#a9bdb1;text-align:center;padding:32px 20px;font
 .sticky span{font-size:.8rem;line-height:1.25}.sticky b{display:block;color:var(--gold2);font-size:1.1rem}.sticky .btn{padding:12px 22px;font-size:.95rem;animation:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1672514214261748');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1672514214261748&ev=PageView&noscript=1"></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 <div class="ticker" role="marquee" aria-label="Aviso da oferta"><div class="tr" id="tr"></div></div>
@@ -250,6 +257,14 @@ var g=document.getElementById('gl'),s='';for(var j=0;j<40;j++)s+='<i></i>';g.inn
 var n=new Date(),y=n.getFullYear(),x=new Date(y,11,25);if(n>x)x=new Date(y+1,11,25);
 var d=Math.ceil((x-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/86400000),txt=d<=0?'É hoje':(d===1?'Falta 1 dia':'Faltam '+d+' dias');
 document.querySelectorAll('.daysleft').forEach(function(e){e.textContent=txt});
+
+// Meta Pixel: ViewContent + InitiateCheckout e repasse de UTMs para o checkout
+try{fbq('track','ViewContent',{content_name:'Projetos de Esculturas de Natal',value:27.90,currency:'BRL'});}catch(e){}
+var P=location.search.replace(/^\?/,'').split('&').filter(function(p){return /^(utm_|fbclid|src=|sck=)/.test(p)}).join('&');
+document.querySelectorAll('a[href^="https://pay.cakto.com.br"]').forEach(function(a){
+ if(P){a.href+=(a.href.indexOf('?')>-1?'&':'?')+P}
+ a.addEventListener('click',function(){try{fbq('track','InitiateCheckout',{content_name:'Projetos de Esculturas de Natal',value:27.90,currency:'BRL'})}catch(e){}});
+});
 var els=document.querySelectorAll('.rv');
 if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
